@@ -1,7 +1,7 @@
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import routes from "./routes";
-//import { NotFound } from "../Pages";
+import {NotFound} from "../Pages";
 
 const Router = () => {
 
@@ -24,7 +24,6 @@ const Router = () => {
 						element={
 							<>
 								<NotFound />
-								
 							</>
 						}
 					/>
