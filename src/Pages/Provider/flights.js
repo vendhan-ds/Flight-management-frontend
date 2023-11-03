@@ -5,11 +5,13 @@ import {
 	Grid,
 	Text,
 	Group,
-  Button,
   Container,
-  Center
+  Center,
+  Button,
+  Modal
 } from '@mantine/core';
-
+import { useDisclosure } from '@mantine/hooks';
+import EditForm from '../../components/provider/editForm';
 
 function FlightItem(props) {
 	return (
@@ -21,30 +23,38 @@ function FlightItem(props) {
 
 
 function FlightList(props) {
-
+  
   const [flights,setFlights] = useState([])
-
+  let prevFlight = flights
+  function changeFlight(){
+    if(prevFlight !== flights){
+      prevFlight = flights
+    }
+  }
   useEffect(() => {
-    console.log("hello")
     retriveFlights();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+  },[prevFlight]);
 
   function retriveFlights() {
     ProviderDataServices.getFlights(props.company)
     .then(response => {
-      console.log(response.data)
       setFlights(response.data.flights)
-      console.log(flights)
+      changeFlight()
     })
     .catch(err => {
       console.log(err)
     })
   }
+
+  const [opened, { open, close }] = useDisclosure(false);
+
   return (
     <div>
-
-			<Center><Text>Dashboard</Text></Center>
+      <Modal opened={opened} onClose={close}>
+        <EditForm data={props}/>
+      </Modal>
+			<Center><Text size='xl'>Dashboard</Text></Center>
       <Group position="center">
 				{flights.length !== 0 ? (
 					<Grid justify="space-around">
@@ -60,6 +70,7 @@ function FlightList(props) {
 					</Container>
 				)}
 			</Group>
+      <Center><Button variant="light" onClick={open}>Add Flight</Button></Center>
     </div>
   )
 

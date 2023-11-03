@@ -3,11 +3,43 @@ import {
 	Card,
 	Text,
 	Group,
+	Modal
 } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import Details from './details';
+import {MdOutlineFlightTakeoff} from 'react-icons/md'
 
 function FlightCard(props) {
-	console.log(props)
+	const [opened, { open, close }] = useDisclosure(false);
 	return (
+		<>
+		<Modal.Root
+					centered
+					opened={opened}
+					size="xl"
+					onClose={close}
+					radius="lg"
+					transitionProps={{
+						transition: 'fade',
+						duration: 450,
+						timingFunction: 'linear',
+					}}
+				>
+					<Modal.Overlay />
+					<Modal.Content>
+						<Modal.Header>
+							<Modal.Title>
+								<Group position="center">
+									<Text weight={500} size="md">
+										<MdOutlineFlightTakeoff size="30"/> Flight Details
+									</Text>
+								</Group>
+							</Modal.Title>
+							<Modal.CloseButton />
+						</Modal.Header>
+						<Details data={props}/>
+					</Modal.Content>
+				</Modal.Root>
 		<Card shadow="sm" padding="lg" radius="lg" withBorder>
 			<div>
 
@@ -34,15 +66,15 @@ function FlightCard(props) {
 						radius="md"
 						size="sm"
 						mb="0"
-						// onClick={open}
+						onClick={open}
 						compact={true}
 					>
 						Show more
 					</Button>
-					{/* </Button> */}
 				</Group>
 			</div>
 		</Card>
+		</>
 	);
 }
 

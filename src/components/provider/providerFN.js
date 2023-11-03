@@ -4,8 +4,13 @@ class ProviderDataServices{
     getFlights(company){
         return http.get(`/provider/dashboard?company=${company}`)
     }
-    addFlight(data,company){
-        return http.post(`/provider/dashboard?company=${company}`,data)
+    addFlight(header,body,company){
+        // console.log(data)
+        return http.post(`/provider/dashboard?company=${company}`,body,header)
+    }
+    deleteFlight(data,company){
+        // console.log(data,company)
+        return http.delete(`/provider/dashboard?company=${company}`,data)
     }
 }
 
