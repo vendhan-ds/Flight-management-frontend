@@ -1,6 +1,4 @@
-import {Login,Register} from "../Pages";
-
-
+import {FlightList, Login,Register} from "../Pages";
 
 const routes = [
     {
@@ -14,7 +12,13 @@ const routes = [
         path : "/register",
         description : "Register Page",
         element  : <Register />,
-    }
+    },
+    {
+        title : "Provider",
+        path : "/provider",
+        description : "Provider Dashboard",
+        element  : <FlightList company="AirIndia"/>,
+    },
 ];
 
 
