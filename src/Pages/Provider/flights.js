@@ -12,6 +12,8 @@ import {
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import EditForm from '../../components/provider/editForm';
+import { useLocation } from 'react-router-dom';
+
 
 function FlightItem(props) {
 	return (
@@ -22,8 +24,11 @@ function FlightItem(props) {
 }
 
 
-function FlightList(props) {
-  
+function FlightList() {
+  const location = useLocation();
+  const comp = location.state.name;
+  let props=comp
+
   const [flights,setFlights] = useState([])
   let prevFlight = flights
   function changeFlight(){
@@ -37,7 +42,7 @@ function FlightList(props) {
   },[prevFlight]);
 
   function retriveFlights() {
-    ProviderDataServices.getFlights(props.company)
+    ProviderDataServices.getFlights(comp)
     .then(response => {
       setFlights(response.data.flights)
       changeFlight()
@@ -51,6 +56,7 @@ function FlightList(props) {
 
   return (
     <div>
+      <Text>Welcome back {comp}</Text>
       <Modal opened={opened} onClose={close}>
         <EditForm data={props}/>
       </Modal>
