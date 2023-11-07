@@ -33,9 +33,11 @@ const Login = () => {
     }else{
       console.log("logger")
       var usr
+      console.log(data1)
       axios.post('http://localhost:5000/login/login',data2).then((res)=>{
         console.log(res.data.user)
         usr=res.data.user
+        console.log(usr)
         let typ=usr.type
         console.log("type",typ)
       if(!typ){
@@ -56,8 +58,8 @@ const Login = () => {
     else setreg(1)
   }
   function togl2(){
-    if(type){settype(1)}
-    else settype(0)
+    if(type){settype(0)}
+    else settype(1)
   }
 
 
