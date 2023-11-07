@@ -1,4 +1,5 @@
 import {FlightList, Login,Register} from "../Pages";
+import Dashboard from "../Pages/Customer";
 
 const routes = [
     {
@@ -18,6 +19,12 @@ const routes = [
         path : "/provider",
         description : "Provider Dashboard",
         element  : <FlightList company="AirIndia"/>,
+    },
+    {
+        title : "Customer",
+        path : "/customer",
+        description : "Customer Dashboard",
+        element  : <Dashboard/>,
     },
 ];
 

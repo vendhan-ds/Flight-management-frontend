@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
-import { useState } from 'react'
+import { useState} from 'react'
 import { Link } from 'react-router-dom'
 //import { Container } from '@mantine/core'
 import {Switch, Input ,TextInput, Button ,Container } from '@mantine/core'
+import { useNavigate } from 'react-router-dom'
+
+
 
 const Login = () => {
   const [name,setname]=useState("Name")
@@ -12,23 +15,37 @@ const Login = () => {
   const [type,settype]=useState(0)
   const [reg,setreg]=useState(0)
   const [email,setemail]=useState("example.com")
-
+  const navigate = useNavigate();
 
   function sendpost(){
     console.log("sendpost")
     var data1={name:name, password:pass, about:about, type:type, email:email}
     
     var data2={name:name,password:pass}
+    
 
     if(reg){
       axios.post('http://localhost:5000/login/register',data1).then((res)=>{
-        console.log(res.data)
+        //console.log(res.data)
       })
       setreg(0)
+      
     }else{
+      console.log("logger")
+      var usr
       axios.post('http://localhost:5000/login/login',data2).then((res)=>{
-        console.log(res.data)
+        console.log(res.data.user)
+        usr=res.data.user
+        let typ=usr.type
+        console.log("type",typ)
+      if(!typ){
+        navigate('/../../provider/',{state:{name:name}});
+      }else{
+        console.log(usr)
+        navigate('/../../customer/',{state:{deet:usr}});
+      }
       })
+      
 
 
     }
