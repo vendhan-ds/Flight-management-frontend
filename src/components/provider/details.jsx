@@ -4,8 +4,10 @@ import {LiaEdit} from "react-icons/lia"
 import {AiOutlineDelete} from "react-icons/ai"
 import ProviderDataServices from "./providerFN.js"
 import { useDisclosure } from '@mantine/hooks';
+import EditForm from "./editForm.jsx";
 function Details(props){
     const [opened, { open, close }] = useDisclosure(false);
+    const [openedEdit, {open: openEdit, close: closeEdit}] = useDisclosure(false);
     function deleteflt(){
         const data = {
             headers: {
@@ -21,14 +23,18 @@ function Details(props){
 
     return (
     <Box maw={340} mx="auto">
-        <Modal opened={opened} onClose={close}>
+        <Modal opened={opened} onClose={close} withCloseButton={false}>
             <Center>
                 <Text>Do you want to delete the flight</Text>
             </Center>
             <Center>
-                <Button size="sm" onClick={deleteflt} >Yes</Button>
-                <Button size="sm" onClick={close}>No</Button>
+                <Button size="sm" onClick={deleteflt} mt="md">Yes</Button>
+                <Button size="sm" onClick={close} ml="md" mt="md">No</Button>
             </Center>
+        </Modal>
+
+        <Modal opened={openedEdit} onClose={closeEdit}>
+            <EditForm data={props.data}/>
         </Modal>
         <Container>
         <Text>Provider ID : {props.data.data.providerName}</Text>
@@ -47,7 +53,7 @@ function Details(props){
             <Text>Sunday : {props.data.data.day.sun === ""? "Null": props.data.data.day.sun}</Text>
         </Container>
         </Container>
-        <Button size="md" rightSection={<LiaEdit/>} variant="light" color="blue" mt="20" mr="30">Edit</Button>
+        <Button size="md" rightSection={<LiaEdit/>} variant="light" color="blue" mt="20" mr="30" onClick={openEdit}>Edit</Button>
         <Button size="md" rightSection={<AiOutlineDelete/>} variant="light" color="red" onClick={open}>Delete</Button>
     </Box>
     )
