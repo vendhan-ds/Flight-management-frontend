@@ -20,8 +20,8 @@ import CardWithoutModal from '../../components/customer/myBook';
 
 
 function FlightItem(props) {
-  //console.log("hey dummy")
-  //console.log(props.date)
+  console.log("hey dummy")
+  console.log(props.date)
   var send={
         data:props.data,
         dateX:props.date
@@ -92,7 +92,8 @@ const Dashboard = () => {
       console.log('Selected Date:', selectedDate);
       console.log((selectedDate).getDay())
       console.log((selectedDate).getYear())
-      let finalDate=`${(selectedDate).getDate()}-${(selectedDate).getMonth()}-${(selectedDate).getFullYear()}`
+      let finalmnth=(selectedDate).getMonth()+1
+      let finalDate=`${(selectedDate).getDate()}-${finalmnth}-${(selectedDate).getFullYear()}`
 
       console.log(finalDate)
       setsendDate(finalDate)
