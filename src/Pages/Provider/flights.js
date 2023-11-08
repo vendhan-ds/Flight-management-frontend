@@ -60,7 +60,7 @@ function FlightList() {
   return (
     <div>
       <Modal opened={opened} onClose={close}>
-        <EditForm company={comp}/>
+        <EditForm company={props}/>
       </Modal>
         <Center style={{backgroundColor: '#6dd2fd', height: '75px'}}>
           <Text size='xl'>Dashboard</Text>

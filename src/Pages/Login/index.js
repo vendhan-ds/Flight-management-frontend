@@ -31,17 +31,22 @@ const Login = () => {
     }else{
       console.log("logger")
       var usr
+      //console.log(data1)
+      window.sessionStorage.setItem("username",name)
       axios.post('http://localhost:5000/login/login',data2).then((res)=>{
         console.log(res.data.user)
         usr=res.data.user
         let typ=Number(usr.type)
-        console.log("type",typ)
-      if(!typ){
+        
+      if(typ!=1){
         window.sessionStorage.setItem("name",name)
         navigate('/provider/',{state:{name:name}});
       }else{
+        console.log("checkk")
         console.log(usr)
-        window.sessionStorage.setItem("deet",usr)
+        window.sessionStorage.setItem("custName",usr.name)
+        window.sessionStorage.setItem("custMail",usr.email)
+        window.sessionStorage.setItem("custId",usr.ID)
         navigate('/customer/',{state:{deet:usr}});
       }
       })
@@ -54,6 +59,8 @@ const Login = () => {
     else setreg(1)
   }
   function togl2(){
+    if(type){settype(0)}
+    else settype(1)
     if(type){settype(0)}
     else settype(1)
   }
