@@ -25,9 +25,10 @@ function FlightItem(props) {
 
 
 function FlightList() {
-  const location = useLocation();
-  const comp = location.state.name;
-  let props=comp
+  //const location = useLocation();
+  //const comp = location.state.name;
+  let props=window.sessionStorage.getItem("name")
+  let comp=props
 
   const [flights,setFlights] = useState([])
   let prevFlight = flights
@@ -58,7 +59,7 @@ function FlightList() {
     <div>
       <Text>Welcome back {comp}</Text>
       <Modal opened={opened} onClose={close}>
-        <EditForm data={props}/>
+        <EditForm company={props}/>
       </Modal>
 			<Center><Text size='xl'>Dashboard</Text></Center>
       <Group position="center">

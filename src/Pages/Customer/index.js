@@ -12,119 +12,176 @@ import {
   Container,
   Center
 } from '@mantine/core';
-//import { DateInput } from '@mantine/dates';
+import { DateInput } from '@mantine/dates';
 //import MyFlightCard from '../../components/provider/cards';
+import CardWithModal from '../../components/customer/cards';
+import CardWithoutModal from '../../components/customer/myBook';
 
-function myFlightItem(prop) {
+
+
+function FlightItem(props) {
+  //console.log("hey dummy")
+  //console.log(props.date)
+  var send={
+        data:props.data,
+        dateX:props.date
+      }
 	return (
-    
 		<Grid.Col style={{ maxWidth: 250 }} sm={12} xs={6}>
-			<Card>
-                      <Text>{prop.flight.start}</Text>
-                      <Text>{prop.flight.dest}</Text>
-                      <Text>{prop.flight.date}</Text>
-                      <Text>{prop.flight.NofT}</Text>
-                      <Text>{prop.flight.price}</Text>
-                    </Card>
+      
+			<CardWithModal data={send}/>
 		</Grid.Col>
 	);
 }
 
 
+function BookedItem(props) {
+  
+  var send={
+        data:props.data,
+        dateX:props.date
+      }
+      //console.log(send)
+	return (
+		<Grid.Col style={{ maxWidth: 250 }} sm={12} xs={6}>
+      
+			<CardWithoutModal data={send}/>
+		</Grid.Col>
+	);
+}
+
+
+
 const Dashboard = () => {
     const location = useLocation();
-    const dets = location.state.deet;
-    console.log(dets)
+    const dets = window.sessionStorage.getItem("custName");
+    const dets2 = window.sessionStorage.getItem("custId");
+   
 //flight: 
 // start, dest , date , number of tickets , price
-    const [myFlights,setFlight]=useState([{start:"chennai",dest:"mumbai", date:"", NofT:0, price:3000}])
+    const [myFlights,setFlight]=useState([])
 
-    const [value, setValue] = useState<Date | null>(null);
+    const [ srcFlights,setSrcFlights]=useState([{ label: 'Option 2', value: 'option2' },{ label: 'Option 1', value: 'option1' }])
 
-    const [srcFlights,setSrcFlights]=useState([])
+    
+    
+    const [selectedDate, setSelectedDate] = useState();
+
+    const [selectedOption, setSelectedOption] = useState();
+
+    const [chk,setchk]=useState('0')
     
     useEffect(()=>{
-        let id=Number(dets.ID)
+      //console.log(srcFlights.length)
+      //console.log(typeof(srcFlights))
+        let id=Number(dets2)
         axios.get(`http://localhost:5000/customer/dashboard?customerID=${id}`).then(
             (res)=>{
                 res=res.data
-                setFlight(res)
+                setFlight(res.tickets)
+                setSrcFlights(res.sourceList)
             }
         )
     },[])
 
-     useEffect(()=>{
-        //let id=Number(dets.ID)
-        axios.get(`http://localhost:5000/provider/dashboard?company="x"`).then(
+    const [cardData,setcardData]=useState([])
+
+    const handleFormSubmit = (e) => {
+      e.preventDefault();
+      console.log('Selected Date:', selectedDate);
+      console.log((selectedDate).getDay())
+      console.log((selectedDate).getYear())
+      let finalDate=`${(selectedDate).getDate()}-${(selectedDate).getMonth()}-${(selectedDate).getFullYear()}`
+
+      console.log(finalDate)
+      console.log('Selected Option:', selectedOption);
+      console.log("hit seach btn")
+          let dataX={source:selectedOption, date:finalDate,
+          day:(selectedDate).getDay()}
+          axios.post(`http://localhost:5000/customer/search`,dataX).then(
             (res)=>{
+              console.log("searched flight")
                 res=res.data
-                setFlight(res)
-                console.log(res)
+                //console.log(res)
+
+                setcardData(res.flights)
+                //setSrcFlights([{ label: 'Option 3', value: 'option3' },{ label: 'Option 1', value: 'option1' }])
+                
             }
-        )
-    },[])
+          )
+    };
+    
 
   return (
     <div>
-        <h1>hello {dets.name}</h1>
+        <h1>hello {dets}</h1>
         <br></br>
         <Container>
-          <Text>Your Bookings</Text>
-          <Container>
-            <Group position="center">
-				      {myFlights.length !== 0 ? (
-					      <Grid justify="space-around">
-						      {myFlights.map(flight => (
-							      <myFlightItem key={flight.bookingId} data={flight}/>
-						      ))}
-					      </Grid>
-				        ) : (
-					    <Container>
-						  <Text >
-							  You havent booked anything.
-						  </Text>
-					    </Container>
-				      )}
-			      </Group> 
-            </Container>
-{/* 
-            <Group position="center">
-				{myflights.length !== 0 ? (
-					<Grid justify="space-around">
-						{flights.map((flight) => (
-							<FlightItem key={flight._ID} data={flight} />
-						))}
-					</Grid>
-				) : (
-					<Container>
-						<Text >
-							Uh Ohhh, No flights available now.
-						</Text>
-					</Container>
-				)}
-			      </Group> 
- */}
-
-
           
+          <Container>
+            <Text>Your Bookings</Text>
+
+            <Group position="center">
+                {myFlights.length !== 0 ? (
+                  <Grid justify="space-around">
+                    {myFlights.map((flight,index) => (
+                      <BookedItem key={index} data={flight} date={selectedDate} />
+                    ))}
+                  </Grid>
+                ) : (
+                  <Container>
+                    <Text >
+                      Uh Ohhh, You havent booked anything.
+                    </Text>
+                  </Container>
+                )}
+              </Group>
+
+            
+          </Container>
           <Container>
             <Text>Buy tickets</Text>
             <Container>
-               <Autocomplete
-                  label="Your favorite library"
-                  placeholder="Pick value or enter anything"
+              <form onSubmit={handleFormSubmit}>
+                <DateInput
+                  label="Select a Date"
+                  value={selectedDate}
+                  onChange={setSelectedDate}
+                  required
+                />
+                { (<Autocomplete
+                  label="Select an Option"
                   data={srcFlights}
-              />
-
-                {/* <DateInput
-                  value={value}
-                  onChange={setValue}
-                  label="Date input"
-                  placeholder="Date input"
-                /> */}
-
-
+                  value={selectedOption}
+                  onChange={ setSelectedOption}
+                  required
+                />)}
+                <button type="submit">Submit</button>
+              </form>
             </Container>
+
+            <Container>
+
+              <Group position="center">
+                {cardData.length !== 0 ? (
+                  <Grid justify="space-around">
+                    {cardData.map((flight) => (
+                      <FlightItem key={flight._id} data={flight} date={selectedDate} />
+                    ))}
+                  </Grid>
+                ) : (
+                  <Container>
+                    <Text >
+                      Uh Ohhh, No flights available.
+                    </Text>
+                  </Container>
+                )}
+              </Group>
+                {/* {cardData.map((card, index) => (
+                <CardWithModal key={index} data={card} />
+                 ))} */}
+            </Container>
+
           </Container>
         </Container>
     </div>
