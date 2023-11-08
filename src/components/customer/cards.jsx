@@ -1,84 +1,106 @@
-import {
-	Button,
-	Card,
-	Text,
-	Group,
-	Modal
-} from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import Details from './details';
-import {MdOutlineFlightTakeoff} from 'react-icons/md'
+// Card.js
+import React, { useEffect, useState } from 'react';
+import { Card, Text, Paper, Button, Modal, TextInput } from '@mantine/core';
+import axios from 'axios';
 
-function MyFlightCard(props) {
-	const [opened, { open, close }] = useDisclosure(false);
-	return (
-		<>
-		<Modal.Root
-					centered
-					opened={opened}
-					size="xl"
-					onClose={close}
-					radius="lg"
-					transitionProps={{
-						transition: 'fade',
-						duration: 450,
-						timingFunction: 'linear',
-					}}
-				>
-					<Modal.Overlay />
-					<Modal.Content>
-						<Modal.Header>
-							<Modal.Title>
-								<Group position="center">
-									<Text weight={500} size="md">
-										<MdOutlineFlightTakeoff size="30"/> Flight Details
-									</Text>
-								</Group>
-							</Modal.Title>
-							<Modal.CloseButton />
-						</Modal.Header>
-						<Details data={props}/>
-					</Modal.Content>
-				</Modal.Root>
-		<Card shadow="sm" padding="lg" radius="lg" withBorder>
-			<div>
 
-				<Group position="center" mt="md" mb="xs">
-					<Text weight={500} size="md">
-					{props.data.flightId}
-					</Text>
-					<Text weight={500} size="md">
-					{props.data.source}
-					</Text>
-					<Text weight={500} size="md">
-					{props.data.destination}
-					</Text>
-					<Text weight={500} size="md">
-					{props.data.price}
-					</Text>
-					<Text weight={500} size="md">
-					{props.data.number}
-					</Text>
-				</Group>
+const CardWithModal = (props) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [inputValue, setInputValue] = useState(0);
+  const [avlSeats,setAvlSeats]=useState()
+  const [flightId,setflightId]=useState()
 
-				<Group position="center">
-					<Button
-						variant="light"
-						color="blue"
-						mt="0"
-						radius="md"
-						size="sm"
-						mb="0"
-						onClick={open}
-						compact={true}
-					>
-						Show more
-					</Button>
-				</Group>
-			</div>
-		</Card>
-		</>
-	);
-}
+  console.log("heyyy")
+  //console.log(props.data.data)
+  const openModal = () => {
+    var data={
+      id:props.data.data._id,
+      date:props.data.dateX
+    }
+    //setdate(props.data.dateX)
+    //console.log(data)
+    axios.post(`http://localhost:5000/customer/flightdetails`,data).then((res)=>{
+        console.log(res.data)
+        setAvlSeats(res.data.noOfTicketsAvailable
+)
+        setflightId(res.data._id)
+    })
 
-export default MyFlightCard;
+    setIsOpen(true);
+
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+
+  const handleSave = () => {
+    
+    
+    const dets = window.sessionStorage.getItem("custName");
+    const dets2 = window.sessionStorage.getItem("custMail");
+    const dets3 = window.sessionStorage.getItem("custId");
+    var bookData={
+      user:{
+        fullName:dets,
+        email:dets2,
+        phone:1234567
+      },
+      bookings:{
+        date:props.data.dateX,
+        flightId:flightId,
+        noOfTickets:Number(inputValue)
+      }
+    }
+    console.log(bookData)
+    axios.post(`http://localhost:5000/customer/dashboard?customerID=${dets3}`,bookData)//update number of tickets left
+    console.log(inputValue);
+    closeModal();
+  };
+
+  // useEffect(()=>{
+    // var data={
+    //   id:props.data.data._id,
+    //   date:props.data.dateX
+    // }
+    // axios.post(`http://localhost:5000/customer/flightdetails`)
+  // },[])
+
+  return (
+    <Card shadow="xs" padding="md">
+      <Text size="x4">provider : {props.data.data.providerName}</Text>
+      <Text size="x4">start : {props.data.data.source}</Text>
+      <Text size="x4">destn : {props.data.data.destination}</Text>
+      <Text size="x4">price : {props.data.data.price}</Text>
+      
+      
+      <Button onClick={openModal}>Open Modal</Button>
+      <Modal
+        title="Input Data"
+        size="xs"
+        opened={isOpen}
+        onClose={closeModal}
+      >
+        <Text>Seats available: {avlSeats}</Text>
+        <TextInput
+              mt={0}
+              label="Pick your seats"
+              placeholder="Enter your details"
+              onChange={(event) => setInputValue(event.currentTarget.value)}
+              radius="md"
+            />
+        {/* <TextInput
+          label="pick your seats"
+          value={inputValue}
+          onChange={handleInputChange}
+        /> */}
+        <Button onClick={handleSave} color="blue">
+          Book
+        </Button>
+      </Modal>
+    </Card>
+  );
+};
+
+export default CardWithModal;

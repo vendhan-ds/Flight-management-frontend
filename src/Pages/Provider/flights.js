@@ -4,20 +4,18 @@ import FlightCard from '../../components/provider/cards';
 import {
 	Grid,
 	Text,
-	Group,
-  Container,
   Center,
   Button,
-  Modal
+  Modal,
+  Image
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import EditForm from '../../components/provider/editForm';
-import { useLocation } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom'
 
 function FlightItem(props) {
 	return (
-		<Grid.Col style={{ maxWidth: 250 }} sm={12} xs={6}>
+		<Grid.Col span={{ base: 12, xl: 4}}>
 			<FlightCard data={props.data}/>
 		</Grid.Col>
 	);
@@ -25,9 +23,8 @@ function FlightItem(props) {
 
 
 function FlightList() {
-  const location = useLocation();
-  const comp = location.state.name;
-  let props=comp
+  const comp = window.sessionStorage.getItem("name")
+  console.log(comp)
 
   const [flights,setFlights] = useState([])
   let prevFlight = flights
@@ -54,29 +51,42 @@ function FlightList() {
 
   const [opened, { open, close }] = useDisclosure(false);
 
+  const navigate = useNavigate();
+  function logout(){
+    window.sessionStorage.removeItem("name")
+    navigate('/');
+  }
+
   return (
     <div>
-      <Text>Welcome back {comp}</Text>
       <Modal opened={opened} onClose={close}>
-        <EditForm data={props}/>
+        <EditForm company={comp}/>
       </Modal>
-			<Center><Text size='xl'>Dashboard</Text></Center>
-      <Group position="center">
+        <Center style={{backgroundColor: '#6dd2fd', height: '75px'}}>
+          <Text size='xl'>Dashboard</Text>
+        </Center>
+      <Center mt="lg">
 				{flights.length !== 0 ? (
-					<Grid justify="space-around">
+					<Grid >
 						{flights.map((flight) => (
 							<FlightItem key={flight._ID} data={flight} />
 						))}
 					</Grid>
 				) : (
-					<Container>
-						<Text >
-							Uh Ohhh, There is nothing in your Dashboard.
-						</Text>
-					</Container>
+          <div>
+            <Image src="not-found.jpg" h={500} w={500}/>
+            <Center>
+              <Text >
+                Uh Ohhh, There is nothing in your Dashboard
+              </Text>
+            </Center>
+          </div>
 				)}
-			</Group>
-      <Center><Button variant="light" onClick={open}>Add Flight</Button></Center>
+			</Center>
+      <Center mt={20}>
+        <Button variant="light" onClick={open} mr={20}>Add Flight</Button>
+        <Button variant="light" color="red" onClick={logout}>Logout</Button>
+      </Center>
     </div>
   )
 

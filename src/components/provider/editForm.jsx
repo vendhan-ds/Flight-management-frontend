@@ -24,7 +24,7 @@ function EditForm(props) {
       }
     }
     const body = {
-      "providerName": props.data.company,
+      "providerName": props.company,
       "flightId": 0,
       "source": source,
       "destination": destination,
@@ -40,7 +40,7 @@ function EditForm(props) {
         "sun": sun
       }
     }
-    ProviderDataServices.addFlight(header,body,props.data.company)
+    ProviderDataServices.addFlight(header,body,props.company)
     // console.log(details)
 
   }
