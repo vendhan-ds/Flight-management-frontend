@@ -44,17 +44,19 @@ function Details(props){
         <Text>Price : {props.data.data.price}</Text>
         <Text>Timings :</Text>
         <Container>
-            <Text>Monday : {props.data.data.day.mon === ""? "Null": props.data.data.day.mon}</Text>
-            <Text>Tuesday : {props.data.data.day.tue === ""? "Null": props.data.data.day.tue}</Text>
-            <Text>Wednesday : {props.data.data.day.wed === ""? "Null": props.data.data.day.wed}</Text>
-            <Text>Thursday : {props.data.data.day.thur === ""? "Null": props.data.data.day.thur}</Text>
-            <Text>Friday : {props.data.data.day.fri === ""? "Null": props.data.data.day.fri}</Text>
-            <Text>Saturday : {props.data.data.day.sat === ""? "Null": props.data.data.day.sat}</Text>
-            <Text>Sunday : {props.data.data.day.sun === ""? "Null": props.data.data.day.sun}</Text>
+            <Text>Monday : {props.data.data.day.mon === ""? "-": props.data.data.day.mon}</Text>
+            <Text>Tuesday : {props.data.data.day.tue === ""? "-": props.data.data.day.tue}</Text>
+            <Text>Wednesday : {props.data.data.day.wed === ""? "-": props.data.data.day.wed}</Text>
+            <Text>Thursday : {props.data.data.day.thur === ""? "-": props.data.data.day.thur}</Text>
+            <Text>Friday : {props.data.data.day.fri === ""? "-": props.data.data.day.fri}</Text>
+            <Text>Saturday : {props.data.data.day.sat === ""? "-": props.data.data.day.sat}</Text>
+            <Text>Sunday : {props.data.data.day.sun === ""? "-": props.data.data.day.sun}</Text>
         </Container>
         </Container>
-        <Button size="md" rightSection={<LiaEdit/>} variant="light" color="blue" mt="20" mr="30" onClick={openEdit}>Edit</Button>
-        <Button size="md" rightSection={<AiOutlineDelete/>} variant="light" color="red" onClick={open}>Delete</Button>
+        <Center>
+        <Button size="md" variant="light" color="blue" mt="20" mr="30" mb="30" onClick={openEdit}><LiaEdit size={'20'}/></Button>
+        <Button size="md" variant="light" color="red" onClick={open} mt="20" mb="30"><AiOutlineDelete size={'20'}/></Button>
+        </Center>    
     </Box>
     )
 }
