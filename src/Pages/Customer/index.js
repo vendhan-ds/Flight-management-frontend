@@ -66,6 +66,7 @@ const Dashboard = () => {
     
     
     const [selectedDate, setSelectedDate] = useState();
+    const [sendDate, setsendDate] = useState();
 
     const [selectedOption, setSelectedOption] = useState();
 
@@ -94,6 +95,7 @@ const Dashboard = () => {
       let finalDate=`${(selectedDate).getDate()}-${(selectedDate).getMonth()}-${(selectedDate).getFullYear()}`
 
       console.log(finalDate)
+      setsendDate(finalDate)
       console.log('Selected Option:', selectedOption);
       console.log("hit seach btn")
           let dataX={source:selectedOption, date:finalDate,
@@ -125,7 +127,7 @@ const Dashboard = () => {
                 {myFlights.length !== 0 ? (
                   <Grid justify="space-around">
                     {myFlights.map((flight,index) => (
-                      <BookedItem key={index} data={flight} date={selectedDate} />
+                      <BookedItem key={index} data={flight} date={sendDate} />
                     ))}
                   </Grid>
                 ) : (
@@ -166,7 +168,7 @@ const Dashboard = () => {
                 {cardData.length !== 0 ? (
                   <Grid justify="space-around">
                     {cardData.map((flight) => (
-                      <FlightItem key={flight._id} data={flight} date={selectedDate} />
+                      <FlightItem key={flight._id} data={flight} date={sendDate} />
                     ))}
                   </Grid>
                 ) : (

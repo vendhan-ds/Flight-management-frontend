@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const CardWithModal = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(0);
   const [avlSeats,setAvlSeats]=useState()
   const [flightId,setflightId]=useState()
 
@@ -34,9 +34,6 @@ const CardWithModal = (props) => {
     setIsOpen(false);
   };
 
-  const handleInputChange = (e) => {
-    setInputValue(e.value);
-  };
 
   const handleSave = () => {
     
@@ -53,9 +50,10 @@ const CardWithModal = (props) => {
       bookings:{
         date:props.data.dateX,
         flightId:flightId,
-        noOfTickets:inputValue
+        noOfTickets:Number(inputValue)
       }
     }
+    console.log(bookData)
     axios.post(`http://localhost:5000/customer/dashboard?customerID=${dets3}`,bookData)//update number of tickets left
     console.log(inputValue);
     closeModal();
@@ -86,10 +84,17 @@ const CardWithModal = (props) => {
       >
         <Text>Seats available: {avlSeats}</Text>
         <TextInput
+              mt={0}
+              label="Pick your seats"
+              placeholder="Enter your details"
+              onChange={(event) => setInputValue(event.currentTarget.value)}
+              radius="md"
+            />
+        {/* <TextInput
           label="pick your seats"
           value={inputValue}
           onChange={handleInputChange}
-        />
+        /> */}
         <Button onClick={handleSave} color="blue">
           Book
         </Button>
