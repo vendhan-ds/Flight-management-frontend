@@ -18,7 +18,6 @@ const Login = () => {
   function sendpost(){
     console.log("sendpost")
     var data1={name:name, password:pass, about:about, type:type, email:email}
-    
     var data2={name:name,password:pass}
     
 
@@ -29,6 +28,7 @@ const Login = () => {
       setreg(0)
       
     }else{
+      window.sessionStorage.setItem("username",name)
       console.log("logger")
       var usr
       //console.log(data1)
