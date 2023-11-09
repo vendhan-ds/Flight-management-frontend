@@ -12,6 +12,8 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import EditForm from '../../components/provider/editForm';
 import { useNavigate } from 'react-router-dom'
+import img from "../Assets/not-found.jpg";
+
 
 function FlightItem(props) {
 	return (
@@ -24,7 +26,6 @@ function FlightItem(props) {
 
 function FlightList() {
   const comp = window.sessionStorage.getItem("name")
-  console.log(comp)
 
   const [flights,setFlights] = useState([])
   let prevFlight = flights
@@ -74,7 +75,7 @@ function FlightList() {
 					</Grid>
 				) : (
           <div>
-            <Image src="not-found.jpg" h={500} w={500}/>
+            <Image src={img} h={500} w={500}/>
             <Center>
               <Text >
                 Uh Ohhh, There is nothing in your Dashboard
