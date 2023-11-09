@@ -3,10 +3,10 @@ import { MantineProvider } from '@mantine/core';
 import ReactDOM from 'react-dom/client';
 // import './index.css';
 import App from './App';
-import './firebase-messaging-sw';
+import {requestPermission} from './firebase-messaging-sw';
 
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, setDoc, getDoc, collection, getDocs } from "firebase/firestore";
+import { getFirestore, doc, collection, addDoc, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBpweQiQjEsLhwsava3OkKLrutUd07vAo4",
@@ -31,22 +31,15 @@ root.render(
   </MantineProvider>
 );
 
-const getAllDocs = async () => {
-  const querySnapshot = await getDocs(collection(db, "userFCM"));
-  querySnapshot.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data());
-  });
-}
-
-// getAllDocs();
-
 const setDocData = async (user, FCM) => {
-  await setDoc(doc(db, "userFCM", user), {
+  await setDoc(doc(db, "userFCM",user), {
+    username: user,
     FCMToken: FCM,
-  }, {merge : true});
+  }, {merge:true});
 }
 var user = window.sessionStorage.getItem("username");
 var FCM = window.sessionStorage.getItem("FCMToken");
+requestPermission()
 if(user)
 {
   setDocData(user, FCM)

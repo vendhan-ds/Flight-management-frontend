@@ -12,7 +12,7 @@ const firebaseConfig = {
 };
 
 
-function requestPermission() {
+export function requestPermission() {
   console.log("Requesting permission...");
   Notification.requestPermission().then((permission) => {
     if (permission === "granted") {
@@ -26,7 +26,7 @@ function requestPermission() {
       .then((currentToken) => {
         if (currentToken) {
           console.log("currentToken: ", currentToken);
-          window.sessionStorage.setItem("FCMToken", currentToken);
+          // window.sessionStorage.setItem("FCMToken", currentToken);
         } else {
           console.log("Can not get token");
         }
@@ -36,6 +36,4 @@ function requestPermission() {
     }
   });
 }
-
-requestPermission();
 
