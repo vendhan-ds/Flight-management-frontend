@@ -2,13 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Text, Paper, Button, Modal, TextInput } from '@mantine/core';
 import axios from 'axios';
-
+import "./cards.css"
 
 const CardWithModal = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState(0);
   const [avlSeats,setAvlSeats]=useState()
   const [flightId,setflightId]=useState()
+  //const [msg,setmsg]=useState()
 
   console.log("heyyy")
   //console.log(props.data.data)
@@ -21,8 +22,7 @@ const CardWithModal = (props) => {
     //console.log(data)
     axios.post(`http://localhost:5000/customer/flightdetails`,data).then((res)=>{
         console.log(res.data)
-        setAvlSeats(res.data.noOfTicketsAvailable
-)
+        setAvlSeats(res.data.noOfTicketsAvailable)
         setflightId(res.data._id)
     })
 
@@ -37,7 +37,10 @@ const CardWithModal = (props) => {
 
   const handleSave = () => {
     
-    
+    if(Number(inputValue)==0 || Number(inputValue)>avlSeats){
+      
+      return
+    }
     const dets = window.sessionStorage.getItem("custName");
     const dets2 = window.sessionStorage.getItem("custMail");
     const dets3 = window.sessionStorage.getItem("custId");
@@ -68,7 +71,7 @@ const CardWithModal = (props) => {
   // },[])
 
   return (
-    <Card shadow="xs" padding="md">
+    <Card className='flcard' shadow="xs" padding="md">
       <Text size="x4">provider : {props.data.data.providerName}</Text>
       <Text size="x4">start : {props.data.data.source}</Text>
       <Text size="x4">destn : {props.data.data.destination}</Text>
@@ -77,7 +80,7 @@ const CardWithModal = (props) => {
       
       <Button onClick={openModal}>Open Modal</Button>
       <Modal
-        title="Input Data"
+        title=""
         size="xs"
         opened={isOpen}
         onClose={closeModal}
@@ -85,8 +88,8 @@ const CardWithModal = (props) => {
         <Text>Seats available: {avlSeats}</Text>
         <TextInput
               mt={0}
-              label="Pick your seats"
-              placeholder="Enter your details"
+              label="Number of seats"
+              placeholder=""
               onChange={(event) => setInputValue(event.currentTarget.value)}
               radius="md"
             />
@@ -95,7 +98,7 @@ const CardWithModal = (props) => {
           value={inputValue}
           onChange={handleInputChange}
         /> */}
-        <Button onClick={handleSave} color="blue">
+        <Button style={{marginTop:"4px"}} onClick={handleSave} color="blue">
           Book
         </Button>
       </Modal>

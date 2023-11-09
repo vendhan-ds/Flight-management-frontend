@@ -1,0 +1,14 @@
+.flcard {
+    padding: 10px;
+    background-color: #eed790;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: inset;
+    margin: 5%
+}
+
+.flcard:hover {
+    border-radius: 5%;
+    background-color: rgb(238, 210, 144);
+    transform: scale(1.07);
+}

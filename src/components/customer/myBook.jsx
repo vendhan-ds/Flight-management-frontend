@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Text, Paper, Button, Modal, TextInput } from '@mantine/core';
 import axios from 'axios';
-
+import "./mybook.css"
 
 const CardWithoutModal = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,23 +11,7 @@ const CardWithoutModal = (props) => {
   const [flightId,setflightId]=useState()
 
   console.log("heyyy")
-  //console.log(props.data.data)
-//   const openModal = () => {
-//     var data={
-//       id:props.data.data._id,
-//       date:props.data.dateX
-//     }
-//     //setdate(props.data.dateX)
-//     //console.log(data)
-//     axios.post(`http://localhost:5000/customer/flightdetails`,data).then((res)=>{
-//         console.log(res.data)
-//         setAvlSeats(res.data.noOfTicketsAvailable)
-//         setflightId(res.data._id)
-//     })
-
-//     setIsOpen(true);
-
-//   };
+ 
 
   const closeModal = () => {
     setIsOpen(false);
@@ -37,44 +21,19 @@ const CardWithoutModal = (props) => {
     setInputValue(e.value);
   };
 
-//   const handleSave = () => {
-    
-    
-//     const dets = window.sessionStorage.getItem("custName");
-//     const dets2 = window.sessionStorage.getItem("custMail");
-//     const dets3 = window.sessionStorage.getItem("custId");
-//     var bookData={
-//       user:{
-//         fullName:dets,
-//         email:dets2,
-//         phone:1234567
-//       },
-//       bookings:{
-//         date:props.data.dateX,
-//         flightId:flightId,
-//         noOfTickets:inputValue
-//       }
-//     }
-//     axios.post(`http://localhost:5000/customer/dashboard?customerID=${dets3}`,bookData)//update number of tickets left
-//     console.log(inputValue);
-//     closeModal();
-//   };
 
-  // useEffect(()=>{
-    // var data={
-    //   id:props.data.data._id,
-    //   date:props.data.dateX
-    // }
-    // axios.post(`http://localhost:5000/customer/flightdetails`)
-  // },[])
 
   return (
-    <Card shadow="xs" padding="md">
-      <Text size="x4">provider : {props.data.data.providerName}</Text>
-      <Text size="x4">start : {props.data.data.source}</Text>
-      <Text size="x4">destn : {props.data.data.destination}</Text>
-      <Text size="x4">date : {(props.data.data.date).substring(0,10)}</Text>
-      <Text size="x4">price : {props.data.data.cost}</Text>
+    <Card shadow="sm" padding="md" className="mybookcard"  radius="md" withBorder>
+      
+      <Text  fw={650} >{props.data.data.providerName}</Text>
+      <div >
+        <Text size="x4">Start : {props.data.data.source}</Text>
+        <Text size="x4">Destn : {props.data.data.destination}</Text>
+      </div>
+      
+      <Text size="x4">Date : {(props.data.data.date).substring(0,10)}</Text>
+      <Text size="x4">Price : {props.data.data.cost}</Text>
       
 {/*       
       <Button onClick={openModal}>Open Modal</Button>

@@ -15,8 +15,8 @@ import {
 import { DateInput } from '@mantine/dates';
 //import MyFlightCard from '../../components/provider/cards';
 import CardWithModal from '../../components/customer/cards';
-import CardWithoutModal from '../../components/customer/myBook';
-
+import CardWithoutModal from '../../components/customer/myBook.jsx';
+import "../../components/customer/myBook.jsx"
 
 
 function FlightItem(props) {
@@ -27,7 +27,7 @@ function FlightItem(props) {
         dateX:props.date
       }
 	return (
-		<Grid.Col style={{ maxWidth: 250 }} sm={12} xs={6}>
+		<Grid.Col span={4}>
       
 			<CardWithModal data={send}/>
 		</Grid.Col>
@@ -43,9 +43,9 @@ function BookedItem(props) {
       }
       //console.log(send)
 	return (
-		<Grid.Col style={{ maxWidth: 250 }} sm={12} xs={6}>
+		<Grid.Col span={4}>
       
-			<CardWithoutModal data={send}/>
+			<CardWithoutModal  data={send}/>
 		</Grid.Col>
 	);
 }
@@ -117,16 +117,21 @@ const Dashboard = () => {
 
   return (
     <div>
-        <h1>hello {dets}</h1>
-        <br></br>
-        <Container>
-          
-          <Container>
-            <Text>Your Bookings</Text>
+        <Center style={{backgroundColor: '#6dd2fd', height: '75px'}}>
+          <Text size='200%'>Welcome back, <b>{dets}</b></Text>
+        </Center>
 
-            <Group position="center">
+        <Container >
+          
+          <Container >
+            <Center>
+              <Text size='xl'>Your Bookings</Text>
+            </Center>
+            
+
+            
                 {myFlights.length !== 0 ? (
-                  <Grid justify="space-around">
+                  <Grid columns={12}  justify="space-around">
                     {myFlights.map((flight,index) => (
                       <BookedItem key={index} data={flight} date={sendDate} />
                     ))}
@@ -138,36 +143,43 @@ const Dashboard = () => {
                     </Text>
                   </Container>
                 )}
-              </Group>
 
             
           </Container>
-          <Container>
-            <Text>Buy tickets</Text>
-            <Container>
+          <Container style={{marginTop:"5%"}}>
+            <Center>
+              <Text size='xl'>Buy Tickets</Text>
+            </Center>
+            <Container style={{marginTop:"1%"}}>
               <form onSubmit={handleFormSubmit}>
-                <DateInput
+                <div style={{display:"flex", marginBottom:"5%"}}>
+                  <>
+                  <DateInput style={{marginRight:"7%"}}
                   label="Select a Date"
                   value={selectedDate}
                   onChange={setSelectedDate}
                   required
-                />
-                { (<Autocomplete
-                  label="Select an Option"
-                  data={srcFlights}
-                  value={selectedOption}
-                  onChange={ setSelectedOption}
-                  required
-                />)}
-                <button type="submit">Submit</button>
+                  />
+                  </>
+                  
+                  
+                  { (<Autocomplete style={{marginRight:"7%"}}
+                    label="Select an Option"
+                    data={srcFlights}
+                    value={selectedOption}
+                    onChange={ setSelectedOption}
+                    required
+                  />)}
+                  <Button style={{marginTop:"3%"}} type="submit">search</Button>
+                </div>
+                
               </form>
             </Container>
 
             <Container>
 
-              <Group position="center">
                 {cardData.length !== 0 ? (
-                  <Grid justify="space-around">
+                  <Grid columns={12} justify="space-around">
                     {cardData.map((flight) => (
                       <FlightItem key={flight._id} data={flight} date={sendDate} />
                     ))}
@@ -179,7 +191,6 @@ const Dashboard = () => {
                     </Text>
                   </Container>
                 )}
-              </Group>
                 {/* {cardData.map((card, index) => (
                 <CardWithModal key={index} data={card} />
                  ))} */}

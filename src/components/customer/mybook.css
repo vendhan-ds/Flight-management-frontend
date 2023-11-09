@@ -1,0 +1,15 @@
+
+
+.mybookcard {
+    padding: 10px;
+    background-color:#FAF9F6;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: inset;
+    margin:5%
+}
+.mybookcard:hover {
+    border-radius: 5%;
+    background-color: lightblue;
+    transform: scale(1.07);
+}
