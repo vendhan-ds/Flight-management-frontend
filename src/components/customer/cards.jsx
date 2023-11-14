@@ -146,7 +146,7 @@ const CardWithModal = (props) => {
     // }
     // axios.post(`http://localhost:5000/customer/flightdetails`)
   // },[])
-
+  console.log(props.data.data)
   return (
     <Card className='flcard' shadow="xs" padding="md">
       <Center>
@@ -181,9 +181,9 @@ const CardWithModal = (props) => {
         <Group mt={'sm'}>
             <Text>Total Cost : {(inputValue-noOfChild)*props.data.data.price}</Text>
         </Group>
-        <SimpleGrid cols={5}>
+        <SimpleGrid cols={5} mt={'sm'}>
           {chk &&
-            [...Array(75)].map((_, rowIndex) => (
+            [...Array(Number(props.data.data.capacity))].map((_, rowIndex) => (
               <Seats key={rowIndex} 
               ticket={ticket} 
               onSeatSelect={handleSeatSelect}
@@ -191,11 +191,15 @@ const CardWithModal = (props) => {
               index={rowIndex} />
             ))}
         </SimpleGrid>
-        <Center>
+        <Center mt={'sm'}>
             <Button onClick={handleSave} color="blue">Book</Button>
         </Center>
-        
-        {props.data.data.reviews !== undefined  && (
+        {(props.data.data.reviews === undefined || props.data.data.reviews.length === 0) && (
+          <Center mt={'sm'}>
+            No reviews available
+          </Center>
+        )}      
+        {props.data.data.reviews !== undefined && props.data.data.reviews.length !== 0  && (
           <div>
             <Center mt={'sm'} style={{fontSize: 20}}>
               Reviews
@@ -213,11 +217,7 @@ const CardWithModal = (props) => {
             </Center>
         </div>
         )}
-        {props.data.data.reviews === undefined && (
-          <Center mt={'sm'}>
-            No reviews available
-          </Center>
-        )}      
+        
         </Modal>
     </Card>
   );

@@ -73,7 +73,7 @@ function FlightList() {
         </Center>
       <Center mt="lg">
 				{flights.length !== 0 ? (
-					<Grid>
+					<Grid grow>
 						{flights.map((flight) => (
 							<FlightItem key={flight._ID} data={flight} />
 						))}
