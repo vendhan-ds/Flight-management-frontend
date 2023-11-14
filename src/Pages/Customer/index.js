@@ -44,7 +44,6 @@ function BookedItem(props) {
       //console.log(send)
 	return (
 		<Grid.Col span={4}>
-      
 			<CardWithoutModal  data={send}/>
 		</Grid.Col>
 	);
@@ -99,19 +98,19 @@ const Dashboard = () => {
       setsendDate(finalDate)
       console.log('Selected Option:', selectedOption);
       console.log("hit seach btn")
-          let dataX={source:selectedOption, date:finalDate,
-          day:(selectedDate).getDay()}
-          axios.post(`http://localhost:5000/customer/search`,dataX).then(
-            (res)=>{
-              console.log("searched flight")
-                res=res.data
-                //console.log(res)
+      let dataX={source:selectedOption, date:finalDate,
+      day:(selectedDate).getDay()}
+      axios.post(`http://localhost:5000/customer/search`,dataX).then(
+        (res)=>{
+          console.log("searched flight")
+            res=res.data
+            //console.log(res)
 
-                setcardData(res.flights)
-                //setSrcFlights([{ label: 'Option 3', value: 'option3' },{ label: 'Option 1', value: 'option1' }])
-                
-            }
-          )
+            setcardData(res.flights)
+            //setSrcFlights([{ label: 'Option 3', value: 'option3' },{ label: 'Option 1', value: 'option1' }])
+            
+        }
+      )
     };
     
 
@@ -127,9 +126,6 @@ const Dashboard = () => {
             <Center>
               <Text size='xl'>Your Bookings</Text>
             </Center>
-            
-
-            
                 {myFlights.length !== 0 ? (
                   <Grid columns={12}  justify="space-around">
                     {myFlights.map((flight,index) => (
@@ -188,9 +184,6 @@ const Dashboard = () => {
                   </Grid>
                 ) : (
                   <div>
-                    <Center>
-                    <Image src={img} h={500} w={500}/>
-                    </Center>
                     <Center>
                       <Text >
                           Uh Ohhh, No flights available.

@@ -17,7 +17,7 @@ import img from "../Assets/not-found.jpg";
 
 function FlightItem(props) {
 	return (
-		<Grid.Col span={{ base: 12, xl: 4}}>
+		<Grid.Col span={4}>
 			<FlightCard data={props.data}/>
 		</Grid.Col>
 	);
@@ -64,11 +64,16 @@ function FlightList() {
         <EditForm company={comp}/>
       </Modal>
         <Center style={{backgroundColor: '#6dd2fd', height: '75px'}}>
-          <Text size='xl'>Dashboard</Text>
+          <Text>Welcome {comp}</Text>
+          {/* <br/>
+          <Text>Dashboard</Text> */}
+        </Center>
+        <Center mt='md'>
+          <Text style={{fontSize: '30'}}>Your Flights</Text>
         </Center>
       <Center mt="lg">
 				{flights.length !== 0 ? (
-					<Grid >
+					<Grid>
 						{flights.map((flight) => (
 							<FlightItem key={flight._ID} data={flight} />
 						))}

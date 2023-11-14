@@ -41,7 +41,7 @@ function FlightCard(props) {
 						<Details data={props}/>
 					</Modal.Content>
 				</Modal.Root>
-		<Card shadow="md" padding="lg" radius="xl" withBorder>
+		<Card shadow="md" padding="lg" radius="xl" withBorder >
 			<div style={{display: 'flex'}}>
 				<div style={{display: 'flex', flex: '50%', float: 'left'}}>
 					<Avatar size="150" src="https://static.vecteezy.com/system/resources/previews/000/623/670/original/airplane-fly-logo-and-symbols-vector-template.jpg" alt="it's me" />
@@ -49,14 +49,14 @@ function FlightCard(props) {
 				<div style={{display: 'flex', flex: '50%', float: 'right'}}>
 					<div mt="md" mb="xs" style={{alignItems: 'center'}}>
 						<Text weight={500} size="md">
-						{props.data.source}
+							Source: {props.data.source}
 						</Text>
 						<Text weight={500} size="md">
-						{props.data.destination}
+						Destination: {props.data.destination}
 						</Text>
 					
 						<Text weight={500} size="md">
-						{props.data.price}
+						Price: {props.data.price}
 						</Text>
 					
 						<Button

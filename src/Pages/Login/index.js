@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { useState} from 'react'
 //import { Container } from '@mantine/core'
-import {Switch ,TextInput, Button ,Container, Center, Text } from '@mantine/core'
+import img from "../Assets/flight-booking.jpg"
+import {Switch ,TextInput, Button ,Container, Center, Text, Image } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -68,15 +69,19 @@ const Login = () => {
 
   return (
     <div>
-      <Center mt={"9%"}>
+      <Center mt={'0.5%'}>
+        <Image src={img}/>
+      </Center>
+      <Center>
         <Text style={{fontSize: 60}}>Flight Booking</Text>
       </Center>
       <Center >
         {reg===1 && (<Text style={{fontSize: 30}}>Register</Text>)}
         {reg===0 && (<Text style={{fontSize: 30}}>Login</Text>)}
+        <Switch ml={'md'} mt={'xs'} onChange={togl2} size="lg" onLabel="Customer" offLabel="Provider"/>
       </Center>
       
-      <Container size={"25%"}>
+      <Container size={"20%"}>
       
       {reg===1 && (<TextInput
               label="Email"
@@ -99,18 +104,17 @@ const Login = () => {
               radius="md"
             />
             <Center>
-            {reg===1 && (<Switch mt={'sm'} onChange={togl2} size="lg" onLabel="Customer" offLabel="Provider"/>)}
+            
             </Center>
             {reg===1 && (<TextInput
-              mt={0}
               label="About"
               placeholder="Enter your details"
               onChange={(event) => setabout(event.currentTarget.value)}
               radius="md"
             />)}
-            <Center mt={'md'}>
-              <Button mr={20} onClick={togl}>{reg===0?"Register":"Login"}</Button>
-              <Button onClick={sendpost}>Submit</Button>
+            <Center mt={'1%'}>
+              <Button mt={'xs'} mr={20} onClick={togl}>{reg===0?"Register":"Login"}</Button>
+              <Button onClick={sendpost} mt={'xs'}>Submit</Button>
             </Center>
       </Container>
     </div>
