@@ -4,19 +4,19 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import {
   Autocomplete ,
-  Card,
 	Grid,
 	Text,
-	Group,
   Button,
   Container,
-  Center
+  Center,
+  Image
 } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 //import MyFlightCard from '../../components/provider/cards';
 import CardWithModal from '../../components/customer/cards';
 import CardWithoutModal from '../../components/customer/myBook.jsx';
 import "../../components/customer/myBook.jsx"
+import img from "../Assets/not-found.jpg";
 
 
 function FlightItem(props) {
@@ -139,11 +139,16 @@ const Dashboard = () => {
                     ))}
                   </Grid>
                 ) : (
-                  <Container>
-                    <Text >
-                      Uh Ohhh, You havent booked anything.
-                    </Text>
-                  </Container>
+                  <div>
+                    <Center>
+                    <Image src={img} h={500} w={500}/>
+                    </Center>
+                    <Center>
+                      <Text >
+                          Uh Ohhh, You havent booked anything.
+                      </Text>
+                    </Center>
+                  </div>
                 )}
 
             
@@ -155,31 +160,28 @@ const Dashboard = () => {
             <Container style={{marginTop:"1%"}}>
               <form onSubmit={handleFormSubmit}>
                 <div style={{display:"flex", marginBottom:"5%"}}>
-                  <>
+                 
                   <DateInput style={{marginRight:"7%"}}
                   label="Select a Date"
                   value={selectedDate}
                   onChange={setSelectedDate}
                   required
                   />
-                  </>
-                  
-                  
+
                   { (<Autocomplete style={{marginRight:"7%"}}
-                    label="Select an Option"
+                    label="Select a Source"
                     data={srcFlights}
                     value={selectedOption}
                     onChange={ setSelectedOption}
                     required
                   />)}
-                  <Button style={{marginTop:"3%"}} type="submit">search</Button>
+                  <Button style={{marginTop:"2.6%"}} type="submit">Search</Button>
                 </div>
                 
               </form>
             </Container>
 
-            <Container>
-
+            <div>
                 {cardData.length !== 0 ? (
                   <Grid columns={12} justify="space-around">
                     {cardData.map((flight) => (
@@ -187,16 +189,21 @@ const Dashboard = () => {
                     ))}
                   </Grid>
                 ) : (
-                  <Container>
-                    <Text >
-                      Uh Ohhh, No flights available.
-                    </Text>
-                  </Container>
+                  <div>
+                    <Center>
+                    <Image src={img} h={500} w={500}/>
+                    </Center>
+                    <Center>
+                      <Text >
+                          Uh Ohhh, No flights available.
+                      </Text>
+                    </Center>
+                  </div>
                 )}
                 {/* {cardData.map((card, index) => (
                 <CardWithModal key={index} data={card} />
                  ))} */}
-            </Container>
+            </div>
 
           </Container>
         </Container>
