@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 
 const Login = () => {
+  sessionStorage.clear()
   const [name,setname]=useState("Name")
   const [pass,setpass]=useState()
   const [about,setabout]=useState("enter a few words")
@@ -33,23 +34,38 @@ const Login = () => {
       var usr
       //console.log(data1)
       window.sessionStorage.setItem("username",name)
-      axios.post('http://localhost:5000/login/login',data2).then((res)=>{
-        console.log(res.data.user)
-        usr=res.data.user
-        let typ=Number(usr.type)
-        
-      if(typ!=1){
-        window.sessionStorage.setItem("name",name)
-        navigate('/provider/',{state:{name:name}});
-      }else{
-        console.log("checkk")
-        console.log(usr)
-        window.sessionStorage.setItem("custName",usr.name)
-        window.sessionStorage.setItem("custMail",usr.email)
-        window.sessionStorage.setItem("custId",usr.ID)
-        navigate('/customer/',{state:{deet:usr}});
-      }
-      })
+      try{
+        axios.post('http://localhost:5000/login/login',data2).then((res)=>{
+          console.log("returned")
+          console.log(res.data.message)
+            if(res.data.message=='Invalid'){
+              alert("Error : incorrect password and user")
+            }
+            else{
+              console.log(res.data.user)
+            usr=res.data.user
+            let typ=Number(usr.type)
+            
+          if(typ!=1){
+            window.sessionStorage.setItem("name",name)
+            navigate('/provider/',{state:{name:name}});
+          }else{
+            console.log("checkk")
+            console.log(usr)
+            window.sessionStorage.setItem("custName",usr.name)
+            window.sessionStorage.setItem("custMail",usr.email)
+            window.sessionStorage.setItem("custId",usr.ID)
+            navigate('/customer/',{state:{deet:usr}});
+            }
+
+            }
+            
+          })
+        }
+        catch(err){
+          alert("Error : incorrect password and user")
+        }
+      
       
     }
   }

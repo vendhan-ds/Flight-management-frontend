@@ -22,7 +22,6 @@ const CardWithoutModal = (props) => {
   };
 
 
-
   return (
     <Card shadow="sm" padding="md" className="mybookcard"  radius="md" withBorder>
       
@@ -34,6 +33,7 @@ const CardWithoutModal = (props) => {
       
       <Text size="x4">Date : {(props.data.data.date).substring(0,10)}</Text>
       <Text size="x4">Price : {props.data.data.cost}</Text>
+      
       
 {/*       
       <Button onClick={openModal}>Open Modal</Button>

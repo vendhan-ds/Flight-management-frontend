@@ -36,7 +36,7 @@ function FlightList() {
   useEffect(() => {
     retriveFlights();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[prevFlight]);
+  },[]);
 
   function retriveFlights() {
     ProviderDataServices.getFlights(comp)

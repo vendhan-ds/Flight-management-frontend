@@ -14,18 +14,8 @@ const routes = [
         description : "Register Page",
         element  : <Register />,
     },
-    {
-        title : "Provider",
-        path : "/provider",
-        description : "Provider Dashboard",
-        element  : <FlightList company="AirIndia"/>,
-    },
-    {
-        title : "Customer",
-        path : "/customer",
-        description : "Customer Dashboard",
-        element  : <Dashboard/>,
-    },
+    
+    
 ];
 
 

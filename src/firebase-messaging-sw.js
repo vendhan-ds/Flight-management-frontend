@@ -26,7 +26,7 @@ export function requestPermission() {
       .then((currentToken) => {
         if (currentToken) {
           console.log("currentToken: ", currentToken);
-          // window.sessionStorage.setItem("FCMToken", currentToken);
+          window.sessionStorage.setItem("FCMToken", currentToken);
         } else {
           console.log("Can not get token");
         }
