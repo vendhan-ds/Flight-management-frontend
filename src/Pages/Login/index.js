@@ -26,6 +26,7 @@ const Login = () => {
     if(reg){
       axios.post('http://localhost:5000/login/register',data1).then((res)=>{
         //console.log(res.data)
+        window.sessionStorage.setItem("username",name)
       })
       setreg(0)
       
